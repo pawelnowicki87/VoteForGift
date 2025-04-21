@@ -8,7 +8,7 @@ export default function Navbar() {
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
 
   return (
-    <div className="flex justify-between items-center h-16 px-6 text-xl border-b border-black bg-primaryColor text-navTextColor">
+    <div className="flex justify-between items-center h-16 px-6 text-xl border-b border-black bg-yellow-600 text-navTextColor">
       <div className="flex justify-center items-center gap-3">
         <Gift />
         <h1>Vote For Gift</h1>

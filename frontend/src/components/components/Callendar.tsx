@@ -53,7 +53,7 @@ export default function Calendar() {
         </button>
       </div>
 
-      <div className="p-4 border rounded-xl shadow bg-white dark:bg-zinc-900">
+      <div className="p-4 border rounded-xl shadow bg-white">
         <div className="flex items-center justify-between mb-4">
           <button onClick={() => setCurrentDate(subMonths(currentDate, 1))}>
             <ChevronLeft className="w-5 h-5" />

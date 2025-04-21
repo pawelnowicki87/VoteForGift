@@ -19,7 +19,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="h-screen border-r border-gray-950 flex flex-col bg-yellow-200 dark:bg-zinc-900">
+    <aside className="h-screen border-r border-gray-950 flex flex-col bg-yellow-200">
 
       {/* Kontener: szerokość zmienna */}
       <div className="flex flex-col w-[64px] md:w-[240px] transition-all duration-300">
@@ -29,8 +29,8 @@ export default function Sidebar() {
               key={href}
               href={href}
               className={cn(
-                'flex items-center px-4 py-2 text-sm font-medium transition-colors hover:bg-accentColor dark:hover:bg-zinc-800',
-                pathname === href ? 'bg-accentColor dark:bg-zinc-800' : '',
+                'flex items-center px-4 py-2 text-sm font-medium transition-colors hover:bg-accentColor',
+                pathname === href ? 'bg-accentColor' : '',
               )}
             >
               <Icon className="h-5 w-5" />
