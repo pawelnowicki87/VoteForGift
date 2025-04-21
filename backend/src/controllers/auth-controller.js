@@ -1,7 +1,11 @@
+import { User } from '../models/user.js'
 
+const register = async (req, res, next) => {
+    const { firstName, lastName, email, password } = req.body;
 
-const register = (req, res, next) => {
-res.send('register controller')
+    const user = await User.create({ firstName, lastName, email, password });
+
+    res.send(user)
 }
 
 

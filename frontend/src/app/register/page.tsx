@@ -1,9 +1,7 @@
 'use client'
 
+import RegisterForm from "@/components/components/RegisterForm"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Facebook } from "lucide-react"
 
@@ -32,37 +30,9 @@ export default function RegisterPage() {
           <Separator className="flex-1" />
         </div>
 
-        {/* Registration form */}
-        <form className="space-y-4 mb-4">
-          <div>
-            <Label htmlFor="name">Imię i nazwisko</Label>
-            <Input id="name" type="text" placeholder="Cezary Pazura" className="hover:bg-yellow-50"/>
-          </div>
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="grzegorz@gmail.com" className="hover:bg-yellow-50" />
-          </div>
-          <div>
-            <Label htmlFor="password">Hasło</Label>
-            <Input id="password" type="password" placeholder="••••••••" className="hover:bg-yellow-50"/>
-          </div>
-          <div>
-            <Label htmlFor="confirmPassword">Potwierdź hasło</Label>
-            <Input id="confirmPassword" type="password" placeholder="••••••••" className="hover:bg-yellow-50"/>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
-            <Label htmlFor="terms">
-              Zapoznałem/łam się i zgadzam z <a href="#" className="underline">polityką prywatności.</a>
-            </Label>
-          </div>
-
-          <Button type="submit" className="w-full mt-2 font-bold bg-secondaryColor">
-            Stwórz
-          </Button>
-        </form>
-        <a href="/register" className="text-muted-foreground  hover:underline ">
+        <RegisterForm />
+        
+        <a href="/login" className="text-muted-foreground  hover:underline ">
             Masz już konto? <span className="text-primaryColor font-semibold">Zaloguj się!</span>
         </a>
       </div>
