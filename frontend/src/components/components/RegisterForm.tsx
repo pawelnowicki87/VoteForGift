@@ -6,10 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useRouter } from 'next/navigation'
+//import { useRouter } from 'next/navigation'
 
-export default function RegisterForm() {
-    const router = useRouter()
+type RegisterFormProps = {
+  onSuccess?: () => void
+}
+
+export default function RegisterForm({ onSuccess }: RegisterFormProps) {
+   // const router = useRouter()
     
   const [form, setForm] = useState({
     firstName: "",
@@ -41,7 +45,8 @@ export default function RegisterForm() {
         password: form.password,
       }).unwrap()
       console.log("✅ Użytkownik zarejestrowany:", res);
-      router.push('/');
+      //router.push('/activation');
+      onSuccess?.();
     } catch (err) {
       console.error("❌ Błąd rejestracji:", err)
     }

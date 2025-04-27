@@ -18,7 +18,7 @@ export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   const events = [
-    { date: new Date(2025, 3, 25), title: 'Spotkanie' },
+    { date: new Date(2025, 3, 26), title: 'Spotkanie' },
     { date: new Date(2025, 3, 30), title: 'Urodziny' }
   ]
 
@@ -83,7 +83,8 @@ export default function Calendar() {
                   className={`
                     p-1 h-8 w-8 md:h-10 md:w-10 mx-auto flex items-center justify-center rounded-md cursor-pointer transition-all hover:bg-slate-400
                     ${hasEvent ? 'bg-blue-500 text-white' : ''}
-                    ${isToday && !hasEvent ? 'border-2 border-primaryColor text-primaryColor font-semibold' : ''}
+                    ${isToday && hasEvent ? 'border-2 border-black text-primaryColor font-semibold' : ''}
+                    ${isToday && !hasEvent ? 'border-2 border-black text-primaryColor font-semibold' : ''}
                     ${!isCurrentMonth ? 'text-muted-foreground opacity-50' : ''}
                   `}
                 >

@@ -3,6 +3,7 @@
 import { Provider } from "react-redux";
 import "./globals.css";
 import { store } from "@/store/store/store";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 
 export default function RootLayout({
@@ -14,7 +15,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Provider store={store}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </Provider>
         
       </body>
