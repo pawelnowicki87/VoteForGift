@@ -6,7 +6,6 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
 });
 
-// POPRAWNE typowanie
 export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -30,3 +29,5 @@ export const baseQueryWithReauth: BaseQueryFn<
 
   return result;
 };
+
+

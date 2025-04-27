@@ -37,7 +37,13 @@ export const authApi = createApi({
       })
     }),
 
-    refresh: builder.query({
+    refresh: builder.query<{ 
+      user: {
+        email: string; 
+        firstName: string; 
+        lastName: string }}, 
+        void
+        >({
       query: () => ({
         url: '/refresh',
         method: 'GET',

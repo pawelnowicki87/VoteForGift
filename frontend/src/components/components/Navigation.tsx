@@ -26,7 +26,7 @@ export default function Navbar() {
 
   };
 
-  const initials = user
+  const initials = user?.firstName && user?.lastName
   ? `${user.firstName[0].toUpperCase()}${user.lastName[0].toUpperCase()}`
   : "";
 

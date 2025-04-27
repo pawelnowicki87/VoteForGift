@@ -11,55 +11,58 @@ const register = async (req, res, next) => {
     const user = await User.create({ firstName, lastName, email, password, activationToken });
     await sendActivationMail(email, activationToken)
 
-    res.send({ email: user.email})
+    res.send({ 
+      email: user.email})
 }
 
 const login = async (req, res, next) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email, activationToken: null }});
+  const user = await User.findOne({ where: { email, activationToken: null }});
 
-    if(!user) {
-        return res.status(400).json({ message: 'Nieprawidłowy email lub hasło'});
-    }
-    
-    if (password !== user.password) {
-      return res.status(401).json({ message: 'Nieprawidłowe hasło' });
-    }
+  if(!user) {
+      return res.status(404).json({ message: 'Nieprawidłowy email lub hasło'});
+  }
 
-    const accessToken = jwt.sign({ 
-        email: user.email, 
-        firstName: user.firstName, 
-        lastName: user.lastName 
-    }, process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '15m'}
-    );
+  if (password !== user.password) {
+    return res.status(401).json({ message: 'Nieprawidłowe hasło' });
+  }
 
-    const refreshToken = jwt.sign({
-        id: user.id},
-        process.env.REFRESH_TOKEN_SECRET,
-        {expiresIn: '30d'}
-    )
+  const accessToken = jwt.sign({ 
+      email: user.email, 
+      firstName: user.firstName, 
+      lastName: user.lastName 
+  }, process.env.ACCESS_TOKEN_SECRET,
+  { expiresIn: '15m'}
+  );
 
-    res.cookie('accessToken', accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict',
-        maxAge: 15 * 60 * 1000,
-    })
+  const refreshToken = jwt.sign({
+      id: user.id},
+      process.env.REFRESH_TOKEN_SECRET,
+      {expiresIn: '30d'}
+  )
 
-    res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Strict',
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-    })
+  res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Strict',
+      maxAge: 15 * 60 * 1000,
+  })
 
-    res.json({ 
+  res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Strict',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+  })
+
+  res.json({
+      user: {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        });
+      }
+  });
 }
 
 const refresh = async (req, res) => {
@@ -95,11 +98,13 @@ const refresh = async (req, res) => {
         maxAge: 15 * 60 * 1000
       });
 
-      // UWAGA: TERAZ WYSYŁAMY usera
       res.json({
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName
+        user: {
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName
+        }
+
       });
     });
   } catch (error) {

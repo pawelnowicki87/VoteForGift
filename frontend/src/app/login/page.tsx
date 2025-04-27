@@ -26,12 +26,11 @@ type CustomError = {
 };
 
 export default function LoginPage() {
-  const [ form, setForm ] = useState<FormData>({email: '', password: ''})
+  const [ form, setForm ] = useState<FormData>({email: '', password: ''});
   const dispatch = useAppDispatch();
   const [login, { isLoading, error }] = useLoginMutation();
 
   const router = useRouter();
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -47,9 +46,9 @@ export default function LoginPage() {
       const res = await login(form).unwrap();
       
       dispatch(setUser({
-        firstName: res.firstName,
-        lastName: res.lastName,
-        email: res.email,
+        firstName: res.user.firstName,
+        lastName: res.user.lastName,
+        email: res.user.email,
       }));
   
       router.push('/');

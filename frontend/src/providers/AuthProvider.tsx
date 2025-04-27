@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from 'react';
 import { useLazyRefreshQuery } from '@/store/api/authApi';
 import { useAppDispatch } from '@/store/store/hooks';
 import { setUser, logout } from '@/store/store/slices/authSlice';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   children: ReactNode;
@@ -13,24 +13,15 @@ type Props = {
 export const AuthProvider = ({ children }: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const pathname = usePathname(); // <--- patrzymy jaka strona
 
   const [triggerRefresh] = useLazyRefreshQuery();
 
   useEffect(() => {
-    // Jeśli jesteśmy na stronach publicznych — NIE próbujemy refresh
-    const publicPaths = ['/login', '/register', '/activation'];
-    const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
-
-    if (isPublicPath) {
-      return; // Jeśli publiczna strona, nie robimy refresh
-    }
-
-    // Jeśli prywatna strona, robimy refresh
     const fetchUser = async () => {
       try {
-        const res = await triggerRefresh({}).unwrap();
-        dispatch(setUser(res));
+        const res = await triggerRefresh().unwrap(); // wywołujemy odświeżenie sesji
+        dispatch(setUser(res.user));
+        console.log("udało się pomyslnie zrobić fetchUser w authProvider", res);
       } catch (error) {
         console.error('❌ Nie udało się odświeżyć sesji:', error);
         dispatch(logout());
@@ -39,7 +30,7 @@ export const AuthProvider = ({ children }: Props) => {
     };
 
     fetchUser();
-  }, [dispatch, router, pathname, triggerRefresh]);
+  }, [dispatch, router, triggerRefresh]);
 
   return children;
 };
