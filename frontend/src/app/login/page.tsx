@@ -26,7 +26,7 @@ type CustomError = {
 };
 
 export default function LoginPage() {
-  const [ form, setForm ] = useState<FormData>({email: '', password: ''});
+  const [ form, setForm ] = useState<FormData>({email: 'pawel.nowicki87@o2.pl', password: '123'});
   const dispatch = useAppDispatch();
   const [login, { isLoading, error }] = useLoginMutation();
 
@@ -51,7 +51,7 @@ export default function LoginPage() {
         email: res.user.email,
       }));
   
-      router.push('/');
+      router.push('/dashboard');
     }
     catch (error) {
       console.log("Błąd logowania: ", error);

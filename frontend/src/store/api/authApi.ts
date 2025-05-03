@@ -1,11 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import { baseQueryWithReauth } from './baseQuery';
+import { baseQueryWithReauth } from './baseQuery'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    
     login: builder.mutation({
       query: (credentials: { email: string; password: string }) => ({
         url: '/login',
@@ -33,17 +32,17 @@ export const authApi = createApi({
       query: () => ({
         url: '/logout',
         method: 'POST',
-        credentials: 'include'
-      })
+        credentials: 'include',
+      }),
     }),
 
-    refresh: builder.query<{ 
+    refresh: builder.query<{
       user: {
-        email: string; 
-        firstName: string; 
-        lastName: string }}, 
-        void
-        >({
+        email: string;
+        firstName: string;
+        lastName: string;
+      };
+    }, void>({
       query: () => ({
         url: '/refresh',
         method: 'GET',
@@ -51,14 +50,22 @@ export const authApi = createApi({
       }),
     }),
 
+    dashboard: builder.query<{ message: string }, void>({
+      query: () => ({
+        url: '/dashboard',
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
-export const { 
-  useLoginMutation, 
-  useRegisterMutation, 
+// eksport hooków
+export const {
+  useLoginMutation,
+  useRegisterMutation,
   useActivateQuery,
   useLogoutMutation,
   useRefreshQuery,
-  useLazyRefreshQuery
-} = authApi;
+  useLazyRefreshQuery,
+  useDashboardQuery,
+} = authApi

@@ -135,6 +135,11 @@ const activate = async (req, res, next) => {
     res.send(user);
 }
 
+const dashboard = async (req, res, next) => {
+  res.status(200).json({ message: 'Witaj na dashboardzie!' });
+
+};
+
 
 
 
@@ -142,5 +147,6 @@ export const authController = {
     register,
     activate,
     login,
-    refresh
+    refresh,
+    dashboard
 }

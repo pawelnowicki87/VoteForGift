@@ -1,5 +1,16 @@
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { setUser, logout } from '@/store/store/slices/authSlice'; // dopasuj ścieżkę
+
+type User = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+type RefreshResponse = {
+  user: User;
+};
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:5000',
@@ -21,7 +32,13 @@ export const baseQueryWithReauth: BaseQueryFn<
     );
 
     if (refreshResult?.error) {
+      api.dispatch(logout());
       return refreshResult;
+    }
+
+    const user = (refreshResult.data as RefreshResponse).user;
+    if (user) {
+      api.dispatch(setUser(user));
     }
 
     result = await baseQuery(args, api, extraOptions);
@@ -29,5 +46,3 @@ export const baseQueryWithReauth: BaseQueryFn<
 
   return result;
 };
-
-
